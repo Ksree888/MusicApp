@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Playerd</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="main">
+    <div class="music-div">
+        <h2 id="title">Heeriye</h2>
+        <h3 id="Artist">Arjit Singh</h3>
+        <div class="img">
+            <img src="images/sreehar-1.jpg" alt="image1"/>
+        </div>
+        <audio src="music/sreehari-1.mp3" ></audio>
+        <div class="music-controls">
+            <i class=" fa-sharp fa-solid fa-backward" id="prev" title="prev"></i>
+            <i class=" fa-sharp fa-solid fa-play main-btn" id="play" title="play"></i>
+            <i class=" fa-sharp fa-solid fa-forward" id="next" title="next"></i>
+        </div>
+    </div>
+</div>
+<script>
+    const music=document.querySelector("audio");
+    const img=document.querySelector("img");
+    const play=document.getElementById('play');
+    const title=document.getElementById('title');
+    const Artist=document.getElementById('Artist');
+    const prev=document.getElementById('prev');
+    const next=document.getElementById('next');
+
+
+const songs =[{
+    name:"sreehari-1",
+    title:"Heeriye",
+    Artist:"Arjit Singh",
+},{
+    name:"sreehari-2",
+    title:"mera sapno ki rani",
+    Artist:"kishor kumar",
+},{
+    name:"sreehari-3",
+    title:"with you",
+    Artist:"AP Dhillon",
+},
+];
+
+let isPlaying=false;
+//for playing the music
+const playMusic =()=>{
+    isPlaying=true;
+    music.play();//predefined function
+    play.classList.replace("fa-play","fa-pause");//for pausing and playing the music
+    img.classList.add("anime");//optional for rotating the image
+};
+//for pausing the music
+const pauseMusic =()=>{
+    isPlaying=false;
+    music.pause();//predefined function
+    play.classList.replace("fa-pause","fa-play");
+    img.classList.remove("anime");
+};
+    play.addEventListener('click',()=>{
+       isPlaying ? pauseMusic() : playMusic();
+    });
+    
+
+    //changing the music data
+const loadSong = (songs) => {
+title.textContent=songs.title;
+Artist.textContent=songs.Artist;
+music.src="music/"+ songs.name + ".mp3";
+img.src="images/"+ songs.name+".jpg";
+
+};
+songIndex=0;
+//  loadSong(songs[1]);
+const nextSong=()=>{
+   songIndex=(songIndex + 1) % songs.length;
+    loadSong(songs[songIndex]);
+    playMusic();
+}
+const prevSong =()=>{
+   songIndex=(songIndex - 1 + songs.length) % songs.length;
+    loadSong(songs[songIndex]);
+    playMusic();
+}
+next.addEventListener('click',nextSong);
+rev.addEventListener('click',prevSong);
+
+</script>
+</body>
+</html>
